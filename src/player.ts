@@ -1,6 +1,5 @@
 export default class Player {
     public _currentScore: number = 0;
-    public _currentBid: number = 0;
     public _madeBids: number = 0;
     public _isDealer: boolean = false;
     private _name: string = "unknown player";
@@ -20,15 +19,6 @@ export default class Player {
 
     public getCurrentScore() {
         return this._currentScore;
-    }
-
-    public makeBid(tricks: number) {
-        this._currentBid = tricks;
-    }
-
-    public madeBid() {
-        this._madeBids++;
-        this._currentScore += 10 + this._currentBid;
     }
 
     public wonSome(tricks: number) {

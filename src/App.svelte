@@ -1,5 +1,4 @@
 <script lang="ts">
-    import {loop} from 'svelte/internal';
     import Game from './game.ts';
 
     export let name: string;
@@ -8,19 +7,24 @@
     let numberOfPlayers: number;
     let gameState: number = 0;
 
-    function setNumberOfPlayers(numberOfPlayers: number): void {
+    let setNumberOfPlayers = (numberOfPlayers: number): void => {
         console.log("set number" + numberOfPlayers);
         theGame.setNumberOfPlayers(numberOfPlayers);
         gameState++;
     }
 
-    function nameThisPlayer(playerNum: number, playerName: string): void {
+    let nameThisPlayer = (playerNum: number, playerName: string): void => {
         theGame._players[playerNum].name = playerName;
     }
 
-    function namingIsDone(): void {
+    let namingIsDone = (): void => {
         console.log("naming done?");
         gameState++;
+    }
+
+    let isCurrentRound = (round: Number): boolean => {
+        console.log * ("current round" + theGame._currentRound);
+        return theGame._currentRound == round;
     }
 
     // show 'board'
@@ -61,29 +65,51 @@
                 <td>round</td>
                 <td>trumps</td>
                 <td>blind?</td>
+                <td>miss?</td>
                 <td>tricks</td>
                 {#each theGame._players as p}
                     <td colspan="3">{p.name}</td>
                 {/each}
+                <td>Actions ...</td>
             </tr>
             {#each theGame._rounds as r}
-                <tr>
+                <tr class:isCurrent={isCurrentRound(r.roundNumber)}>
                     <td>{r.roundNumber}</td>
                     <td>{r._trumpSuit}</td>
                     <td>{r.isBlind}</td>
+                    <td>{r.isMiss}</td>
                     <td>{r.tricks}</td>
                     {#each theGame._players as p}
-                        <td class="edge">nominated</td>
-                        <td>result</td>
-                        <td>score</td>
+                        {#if isCurrentRound(r.roundNumber)}
+                            <td class="edge results">
+                                <select bind:value={p.makeBid} on:change="{() => p.makeBid()}">
+                                    <option value="">Pick Their Bid!</option>
+                                    {#each Array(r.tricks + 1) as _, index (index)}
+                                        <option value={index}>{index}</option>
+                                    {/each}
+                                </select>
+                            </td>
+                        {:else}
+                            <td class="edge results">nominated</td>
+                        {/if}
+                        <td class="results">result</td>
+                        <td class="results">score</td>
                     {/each}
+                    {#if isCurrentRound(r.roundNumber)}
+                        <td class="actions">
+                            <button on:click={() => namingIsDone()}>Bidding Done</button>
+                        </td>
+                    {:else}
+                        <td>&nbsp;</td>
+                    {/if}
                 </tr>
             {/each}
             <tr>
-                <td colspan="4" class="totes">Score</td>
+                <td colspan="5" class="totes">Score</td>
                 {#each theGame._players as p}
-                    <td colspan="3" class="totes">totes</td>
+                    <td colspan="3" class="totes">{p.getCurrentScore()}</td>
                 {/each}
+                <td>&nbsp;</td>
             </tr>
         </table>
     {/if}
@@ -104,8 +130,18 @@
         font-weight: 100;
     }
 
+    tr.isCurrent {
+        background-color: lightgreen;
+        font-size: 20px;
+    }
+
     td {
         border-bottom: 1px solid lightgray;
+    }
+
+    td.results {
+        color: lightgray;
+        font-size: 10px;
     }
 
     td.edge {
