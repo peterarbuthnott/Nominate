@@ -7,24 +7,21 @@ export default class Game {
     public _numberOfPlayers: number = 2;
     public _players: Array<Player> = [];
 
+
     constructor() {
-        // set up rounds
+        // // set up rounds
         for (let rounds: number = 0; rounds < 18; rounds++) {
             this._rounds.push(new Round(rounds + 1));
         }
     }
 
-    setNumberOfPlayers(numberOfPlayers) {
+    setNumberOfPlayers(numberOfPlayers: number) {
         this._numberOfPlayers = numberOfPlayers;
         // set up players
         this._players = [];
         this._players.push(new Player('1', true));
         for (let players: number = 2; players <= numberOfPlayers; players++) {
             this._players.push(new Player(players.toLocaleString(), false));
-            for (let rounds: number = 0; rounds < 18; rounds++) {
-                this._rounds.push(new Round(rounds + 1));
-            }
-
         }
     }
 
@@ -47,9 +44,9 @@ export default class Game {
 }
 
 class Round {
+    public _trumpSuit: string;
     private _roundNumber: number = 0;
     private _trumpSuits: string[] = ["clubs", "diamonds", "hearts", "spades"];
-    public _trumpSuit: string;
     private _tricks: number = 0;
     private _isMiss: boolean = false;
     private _isBlind: boolean = false;
@@ -107,21 +104,5 @@ class Round {
     set tricks(value: number) {
         this._tricks = value;
     }
-}
-
-class PlayerRoundScore {
-    _tricksNominated: number = 0;
-    _tricksWon: number = 0;
-    _score: number = 0;
-
-    constructor() {
-
-    }
-
-    public madeBid() {
-        this._tricksWon = this._tricksNominated;
-        this._currentScore += 10 + this._currentBid;
-    }
-
 }
 
