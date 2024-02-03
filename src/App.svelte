@@ -9,7 +9,7 @@
     let roundState: number = 0;
 
     let setNumberOfPlayers = (numberOfPlayers: number): void => {
-        console.log("set number" + numberOfPlayers);
+        console.log("set number of players =" + numberOfPlayers);
         theGame.setNumberOfPlayers(numberOfPlayers);
         gameState++;
     }
@@ -19,7 +19,7 @@
     }
 
     let namingIsDone = (): void => {
-        console.log("naming done?");
+        console.log("naming done");
         gameState++;
     }
 
@@ -28,23 +28,36 @@
     }
 
     let biddingIsDone = (): void => {
-        console.log("bidding done?");
+        console.log("bidding done");
         roundState++;
     }
 
     let trickingIsDone = (): void => {
-        console.log("tricking done?");
-        for (let scoredPlayers:number = 0; scoredPlayers < theGame._numberOfPlayers; scoredPlayers++) {
+        console.log("tricking done");
+        for (let scoredPlayers: number = 0; scoredPlayers < theGame._numberOfPlayers; scoredPlayers++) {
             let tempPRS = theGame._players[scoredPlayers]._playerRoundScores[theGame._currentRound];
-            if (tempPRS._tricksWon == tempPRS._tricksNominated) {
-                tempPRS._madeBid = true;
-                tempPRS._score = 10 + tempPRS._tricksNominated;
+            if (theGame._rounds[theGame._currentRound - 1]._isMiss) {
+                tempPRS._score = -3 * tempPRS._tricksWon;
+                tempPRS._madeBid = (tempPRS._tricksWon === 0);
             } else {
-                tempPRS._score = tempPRS._tricksWon;
+                if (tempPRS._tricksWon === tempPRS._tricksNominated) {
+                    tempPRS._madeBid = true;
+                    tempPRS._score = 10 + tempPRS._tricksNominated;
+                } else {
+                    tempPRS._score = tempPRS._tricksWon;
+                }
             }
+            theGame._players[scoredPlayers]._currentScore += tempPRS._score;
         }
         theGame._currentRound++;
-        roundState = 0;
+        console.log("the next round is " + theGame._currentRound);
+        if (theGame._currentRound > 18) {
+            gameState++;
+        } else {
+            theGame.moveDealerOn();
+            roundState = 0;
+            if (theGame._rounds[theGame._currentRound - 1]._isMiss) roundState++;
+        }
     }
 </script>
 
@@ -54,13 +67,13 @@
         <h2>How many players?</h2>
         <select bind:value={numberOfPlayers} on:change="{() => setNumberOfPlayers(numberOfPlayers)}">
             <option value="">Pick one!</option>
-            {#each Array(3) as _, index (index)}
+            {#each Array(6) as _, index (index)}
                 <option value={index+2}>{index + 2}</option>
             {/each}
         </select>
     {/if}
     {#if gameState === 1}
-        <h2>Names For Them Players?</h2>
+        <h2>Names them players!</h2>
         {#each theGame._players as p, index(index)}
             Player {index + 1} <input type="text" bind:value={p.name}
                                       on:change={() => nameThisPlayer(index, p.name)}><br/>
@@ -68,33 +81,40 @@
         <button on:click={() => namingIsDone()}>Done Naming</button>
     {/if}
     {#if gameState === 2}
-        <table id="resultsTable">
+        <h2>Scoring!</h2>
+        <table>
+            <thead>
             <tr>
-                <td>round</td>
-                <td>trumps</td>
-                <td>blind?</td>
-                <td>miss?</td>
-                <td>tricks</td>
+                <th>round</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>trumps</th>
+                <th>tricks</th>
                 {#each theGame._players as p}
                     <td colspan="3">{p.name}</td>
                 {/each}
-                <td>Actions ...</td>
+                <th>Actions ...</th>
             </tr>
+            </thead>
+            <tbody>
             {#each theGame._rounds as r}
-                <tr class:isCurrent={isCurrentRound(r.roundNumber)}>
+                <tr class:isCurrent={isCurrentRound(r.roundNumber)}
+                    class:isMiss={r._isMiss} class:isBlind={r._isBlind}>
                     <td>{r.roundNumber}</td>
-                    <td>{r._trumpSuit}</td>
-                    <td>{r.isBlind}</td>
-                    <td>{r.isMiss}</td>
+                    <td>{r.isBlind ? "blind" : ""}</td>
+                    <td>{r.isMiss ? "miss" : ""}</td>
+                    <td class="totes" class:redSuit={r._isRedSuit}>{r._trumpSuit === "no" ? "" : r._trumpSuit}</td>
                     <td>{r.tricks}</td>
                     {#each theGame._players as p}
                         {#if r.roundNumber < theGame._currentRound}
-                            <td class="edge entered">{p._playerRoundScores[r.roundNumber]._tricksNominated}</td>
-                            <td class="edge entered">{p._playerRoundScores[r.roundNumber]._tricksWon}</td>
-                            <td class="edge entered">{p._playerRoundScores[r.roundNumber]._score}</td>
+                            <td class="edge entered"
+                                title="bid">{p._playerRoundScores[r.roundNumber]._tricksNominated}</td>
+                            <td class="edge entered" title="got">{p._playerRoundScores[r.roundNumber]._tricksWon}</td>
+                            <td class="edge entered" class:madeBid={p._playerRoundScores[r.roundNumber]._madeBid}
+                                title="score">{p._playerRoundScores[r.roundNumber]._score}</td>
                         {:else if isCurrentRound(r.roundNumber)}
                             {#if roundState === 0}
-                                <td class="edge results">
+                                <td class="edge results" class:dealer={p._isDealer} title="bid">
                                     <select bind:value={p._playerRoundScores[r.roundNumber]._tricksNominated}>
                                         <option value="">Bid?</option>
                                         {#each Array(r.tricks + 1) as _, index (index)}
@@ -102,14 +122,15 @@
                                         {/each}
                                     </select>
                                 </td>
-                                <td class="results">got</td>
+                                <td class="results" class:dealer={p._isDealer}>got</td>
                                 <td class="results">score</td>
                             {:else if roundState === 1}
-                                <td class="edge entered">{p._playerRoundScores[r.roundNumber]._tricksNominated}</td>
-                                <td class="edge results">
+                                <td class="edge entered" class:dealer={p._isDealer}
+                                    title="bid">{p._playerRoundScores[r.roundNumber]._tricksNominated}</td>
+                                <td class="edge results" class:dealer={p._isDealer} title="got">
                                     <select bind:value={p._playerRoundScores[r.roundNumber]._tricksWon}>
                                         <option value="">Got?</option>
-                                        {#each Array(r.tricks + 1) as _, index (index)}
+                                        {#each Array((r._isMiss ? 8 : r.tricks + 1)) as _, index (index)}
                                             <option value={index}>{index}</option>
                                         {/each}
                                     </select>
@@ -136,6 +157,8 @@
                     {/if}
                 </tr>
             {/each}
+            </tbody>
+            <tfoot>
             <tr>
                 <td colspan="5" class="totes">Score</td>
                 {#each theGame._players as p}
@@ -143,6 +166,26 @@
                 {/each}
                 <td>&nbsp;</td>
             </tr>
+            </tfoot>
+        </table>
+    {/if}
+    {#if gameState === 3}
+        <h2>Results!</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            {#each theGame._players as p}
+                <tr>
+                    <td>{p.name}</td>
+                    <td class="totes">{p.getCurrentScore()}</td>
+                </tr>
+            {/each}
+            </tbody>
         </table>
     {/if}
 </main>
@@ -151,7 +194,10 @@
     main {
         text-align: center;
         padding: 1em;
-        max-width: 240px;
+        margin: 0 auto;
+    }
+
+    table {
         margin: 0 auto;
     }
 
@@ -164,11 +210,23 @@
 
     tr.isCurrent {
         background-color: lightgreen;
-        font-size: 20px;
+    }
+
+    tr.isMiss {
+        background-color: lightpink;
+    }
+
+    tr.isBlind {
+        background-color: darksalmon;
     }
 
     td {
         border-bottom: 1px solid lightgray;
+        min-width: 40px;
+    }
+
+    td.redSuit {
+        color: red;
     }
 
     td.results {
@@ -183,6 +241,18 @@
 
     td.edge {
         border-left: 1px solid #ff3e00;
+    }
+
+    td select {
+        width: 40px;
+    }
+
+    td.dealer {
+        background-color: green;
+    }
+
+    td.madeBid {
+        background-color: aquamarine;
     }
 
     td.totes {

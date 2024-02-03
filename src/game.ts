@@ -25,6 +25,23 @@ export default class Game {
         }
     }
 
+    moveDealerOn() {
+        for (let player: number = 0; player <= this._numberOfPlayers; player++) {
+            if (this._players[player]._isDealer) {
+                console.log("current dealer = " + this._players[player]._name);
+                this._players[player]._isDealer = false;
+                if (player === this._numberOfPlayers - 1) {
+                    this._players[0]._isDealer = true;
+                    console.log("new dealer = " + this._players[0]._name);
+                } else {
+                    this._players[player + 1]._isDealer = true;
+                    console.log("new dealer = " + this._players[player + 1]._name);
+                }
+                break;
+            }
+        }
+    }
+
     renderNominated(table: HTMLTableElement) {
         let headerRow = table.insertRow().insertCell();
         headerRow.colSpan = this._numberOfPlayers;
@@ -44,21 +61,25 @@ export default class Game {
 }
 
 class Round {
-    public _trumpSuit: string;
     private _roundNumber: number = 0;
-    private _trumpSuits: string[] = ["clubs", "diamonds", "hearts", "spades"];
+    public _trumpSuit: string = "no"
+    private _trumpSuits: string[] = ["clubs ♣", "diamonds ♦", "hearts ♥", "spades ♠"];
+    public _isRedSuit: boolean = false;
+    private _redSuits: boolean[] = [false, true, true, false];
     private _tricks: number = 0;
-    private _isMiss: boolean = false;
-    private _isBlind: boolean = false;
+    public _isMiss: boolean = false;
+    public _isBlind: boolean = false;
 
-    constructor(roundNumber) {
+    constructor(roundNumber: number) {
         this._roundNumber = roundNumber;
         if (this._roundNumber <= 7) {
             this._tricks = roundNumber;
             this._trumpSuit = this._trumpSuits[(roundNumber < 5 ? roundNumber - 1 : roundNumber - 5)];
+            this._isRedSuit = this._redSuits[(roundNumber < 5 ? roundNumber - 1 : roundNumber - 5)];
         } else if (this._roundNumber > 7 && this._roundNumber < 12) {
             if (this._roundNumber == 8 || this._roundNumber == 10) {
                 this._trumpSuit = this._trumpSuits[(roundNumber < 9 ? roundNumber - 5 : roundNumber - 10)];
+                this._isRedSuit = this._redSuits[(roundNumber < 9 ? roundNumber - 5 : roundNumber - 10)];
             }
             if (this._roundNumber > 9) {
                 this._isBlind = true;
@@ -69,8 +90,8 @@ class Round {
             this._tricks = (19 - this._roundNumber);
             this._isBlind = false;
             this._trumpSuit = this._trumpSuits[(roundNumber < 15 ? roundNumber - 11 : roundNumber - 15)];
+            this._isRedSuit = this._redSuits[(roundNumber < 15 ? roundNumber - 11 : roundNumber - 15)];
         }
-        if (this._trumpSuit == undefined) this._trumpSuit = "no trump";
     }
 
     get roundNumber(): number {
