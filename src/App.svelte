@@ -36,7 +36,7 @@
         console.log("tricking done");
         for (let scoredPlayers: number = 0; scoredPlayers < theGame._numberOfPlayers; scoredPlayers++) {
             let tempPRS = theGame._players[scoredPlayers]._playerRoundScores[theGame._currentRound];
-            if (theGame._rounds[theGame._currentRound - 1]._isMiss) {
+            if (theGame._rounds[theGame._currentRound - 1].isMiss) {
                 tempPRS._score = -3 * tempPRS._tricksWon;
                 tempPRS._madeBid = (tempPRS._tricksWon === 0);
             } else {
@@ -56,7 +56,7 @@
         } else {
             theGame.moveDealerOn();
             roundState = 0;
-            if (theGame._rounds[theGame._currentRound - 1]._isMiss) roundState++;
+            if (theGame._rounds[theGame._currentRound - 1].isMiss) roundState++;
         }
     }
 </script>
@@ -99,7 +99,7 @@
             <tbody>
             {#each theGame._rounds as r}
                 <tr class:isCurrent={isCurrentRound(r.roundNumber)}
-                    class:isMiss={r._isMiss} class:isBlind={r._isBlind}>
+                    class:isMiss={r.isMiss} class:isBlind={r.isBlind}>
                     <td>{r.roundNumber}</td>
                     <td>{r.isBlind ? "blind" : ""}</td>
                     <td>{r.isMiss ? "miss" : ""}</td>
@@ -115,28 +115,26 @@
                         {:else if isCurrentRound(r.roundNumber)}
                             {#if roundState === 0}
                                 <td class="edge results" class:dealer={p._isDealer} title="bid">
-                                    <select bind:value={p._playerRoundScores[r.roundNumber]._tricksNominated}>
-                                        <option value="">Bid?</option>
+                                    <select bind:value={p._playerRoundScores[r.roundNumber]._tricksNominated}
+                                            title="bid">
                                         {#each Array(r.tricks + 1) as _, index (index)}
                                             <option value={index}>{index}</option>
                                         {/each}
                                     </select>
                                 </td>
                                 <td class="results" class:dealer={p._isDealer}>got</td>
-                                <td class="results">score</td>
                             {:else if roundState === 1}
                                 <td class="edge entered" class:dealer={p._isDealer}
                                     title="bid">{p._playerRoundScores[r.roundNumber]._tricksNominated}</td>
                                 <td class="edge results" class:dealer={p._isDealer} title="got">
-                                    <select bind:value={p._playerRoundScores[r.roundNumber]._tricksWon}>
-                                        <option value="">Got?</option>
-                                        {#each Array((r._isMiss ? 8 : r.tricks + 1)) as _, index (index)}
+                                    <select bind:value={p._playerRoundScores[r.roundNumber]._tricksWon} title="got">
+                                        {#each Array((r.isMiss ? 8 : r.tricks + 1)) as _, index (index)}
                                             <option value={index}>{index}</option>
                                         {/each}
                                     </select>
                                 </td>
-                                <td class="results">score</td>
                             {/if}
+                            <td class="results">score</td>
                         {:else}
                             <td class="results">bid</td>
                             <td class="results">got</td>
@@ -221,7 +219,7 @@
     }
 
     td {
-        border-bottom: 1px solid lightgray;
+        border-bottom: 1px solid lightslategray;
         min-width: 40px;
     }
 
@@ -230,7 +228,6 @@
     }
 
     td.results {
-        color: lightgray;
         font-size: 10px;
     }
 

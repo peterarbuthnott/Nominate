@@ -98,32 +98,16 @@ class Round {
         return this._roundNumber;
     }
 
-    set roundNumber(value: number) {
-        this._roundNumber = value;
-    }
-
     get isBlind(): boolean {
         return this._isBlind;
-    }
-
-    set isBlind(value: boolean) {
-        this._isBlind = value;
     }
 
     get isMiss(): boolean {
         return this._isMiss;
     }
 
-    set isMiss(value: boolean) {
-        this._isMiss = value;
-    }
-
     get tricks(): number {
         return this._tricks;
-    }
-
-    set tricks(value: number) {
-        this._tricks = value;
     }
 }
 
