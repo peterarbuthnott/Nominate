@@ -1,5 +1,6 @@
 export default class Player {
     public _currentScore: number = 0;
+    public _madeBids: number = 0;
     public _isDealer: boolean = false;
     public _playerRoundScores: Array<PlayerRoundScore> = [];
     public _name: string = "unknown player";
@@ -22,6 +23,10 @@ export default class Player {
 
     public getCurrentScore() {
         return this._currentScore;
+    }
+
+    public getMadeBids(): number {
+        return this._madeBids;
     }
 }
 

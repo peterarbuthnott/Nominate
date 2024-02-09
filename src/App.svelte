@@ -29,34 +29,63 @@
 
     let biddingIsDone = (): void => {
         console.log("bidding done");
-        roundState++;
+        let totalBids: number = 0;
+        let dealerName: string = "";
+        for (let scoredPlayers: number = 0; scoredPlayers < theGame._numberOfPlayers; scoredPlayers++) {
+            totalBids += theGame._players[scoredPlayers]._playerRoundScores[theGame._currentRound]._tricksNominated;
+            if (theGame._players[scoredPlayers]._isDealer) dealerName = theGame._players[scoredPlayers]._name;
+        }
+        console.log("totalBids=" + totalBids + " tricks=" + theGame._rounds[theGame._currentRound - 1].tricks);
+        if (totalBids === theGame._rounds[theGame._currentRound - 1].tricks) {
+            alert("The total bids can't equal the number of tricks - the Dealer [" + dealerName
+                + "] needs to change their bid?");
+        } else {
+            roundState++;
+        }
     }
 
     let trickingIsDone = (): void => {
         console.log("tricking done");
+        let totalTricksWon: number = 0;
+        let totalTricksAvailable: number = 7;
         for (let scoredPlayers: number = 0; scoredPlayers < theGame._numberOfPlayers; scoredPlayers++) {
-            let tempPRS = theGame._players[scoredPlayers]._playerRoundScores[theGame._currentRound];
-            if (theGame._rounds[theGame._currentRound - 1].isMiss) {
-                tempPRS._score = -3 * tempPRS._tricksWon;
-                tempPRS._madeBid = (tempPRS._tricksWon === 0);
-            } else {
-                if (tempPRS._tricksWon === tempPRS._tricksNominated) {
-                    tempPRS._madeBid = true;
-                    tempPRS._score = 10 + tempPRS._tricksNominated;
-                } else {
-                    tempPRS._score = tempPRS._tricksWon;
-                }
-            }
-            theGame._players[scoredPlayers]._currentScore += tempPRS._score;
+            totalTricksWon += theGame._players[scoredPlayers]._playerRoundScores[theGame._currentRound]._tricksWon;
         }
-        theGame._currentRound++;
-        console.log("the next round is " + theGame._currentRound);
-        if (theGame._currentRound > 18) {
-            gameState++;
+        if (!theGame._rounds[theGame._currentRound - 1].isMiss) {
+            totalTricksAvailable = theGame._rounds[theGame._currentRound - 1].tricks;
+        }
+        console.log("totalTricksWon=" + totalTricksWon + " tricks=" + totalTricksAvailable);
+
+        if (totalTricksWon !== totalTricksAvailable) {
+            alert("The total tricks won [" + totalTricksWon + "] must equal the number of tricks available [" +
+                totalTricksAvailable + "]- please update?");
         } else {
-            theGame.moveDealerOn();
-            roundState = 0;
-            if (theGame._rounds[theGame._currentRound - 1].isMiss) roundState++;
+
+            for (let scoredPlayers: number = 0; scoredPlayers < theGame._numberOfPlayers; scoredPlayers++) {
+                let tempPRS = theGame._players[scoredPlayers]._playerRoundScores[theGame._currentRound];
+                if (theGame._rounds[theGame._currentRound - 1].isMiss) {
+                    tempPRS._score = -3 * tempPRS._tricksWon;
+                    tempPRS._madeBid = (tempPRS._tricksWon === 0);
+                } else {
+                    if (tempPRS._tricksWon === tempPRS._tricksNominated) {
+                        tempPRS._madeBid = true;
+                        tempPRS._score = 10 + tempPRS._tricksNominated;
+                    } else {
+                        tempPRS._score = tempPRS._tricksWon;
+                    }
+                }
+                theGame._players[scoredPlayers]._currentScore += tempPRS._score;
+                if (tempPRS._madeBid) theGame._players[scoredPlayers]._madeBids += 1;
+            }
+            theGame._currentRound++;
+            console.log("the next round is " + theGame._currentRound);
+            if (theGame._currentRound > 18) {
+                gameState++;
+            } else {
+                theGame.moveDealerOn();
+                roundState = 0;
+                if (theGame._rounds[theGame._currentRound - 1].isMiss) roundState++;
+            }
         }
     }
 </script>
@@ -78,7 +107,7 @@
             Player {index + 1} <input type="text" bind:value={p.name}
                                       on:change={() => nameThisPlayer(index, p.name)}><br/>
         {/each}
-        <button on:click={() => namingIsDone()}>Done Naming</button>
+        <button on:click={() => namingIsDone()}>Done Naming &gt;&gt;</button>
     {/if}
     {#if gameState === 2}
         <h2>Scoring!</h2>
@@ -145,9 +174,9 @@
                     {#if isCurrentRound(r.roundNumber)}
                         <td class="actions">
                             {#if roundState === 0}
-                                <button on:click={() => biddingIsDone()}>Bidding Done</button>
+                                <button on:click={() => biddingIsDone()}>Bidding Done &gt;&gt;</button>
                             {:else if roundState === 1}
-                                <button on:click={() => trickingIsDone()}>Tricking Done</button>
+                                <button on:click={() => trickingIsDone()}>Tricking Done &gt;&gt;</button>
                             {/if}
                         </td>
                     {:else}
@@ -160,7 +189,8 @@
             <tr>
                 <td colspan="5" class="totes">Score</td>
                 {#each theGame._players as p}
-                    <td colspan="3" class="totes">{p.getCurrentScore()}</td>
+                    <td colspan="2" class="results totes" title="bids made">{p.getMadeBids()}</td>
+                    <td class="totes" title="score">{p.getCurrentScore()}</td>
                 {/each}
                 <td>&nbsp;</td>
             </tr>
@@ -173,14 +203,16 @@
             <thead>
             <tr>
                 <th>Name</th>
-                <th>Score</th>
+                <th>Made</th>
+                <th>Final Score</th>
             </tr>
             </thead>
             <tbody>
             {#each theGame._players as p}
                 <tr>
                     <td>{p.name}</td>
-                    <td class="totes">{p.getCurrentScore()}</td>
+                    <td class="totes results" title="made bids (out of 18 possible)">{p.getMadeBids()}</td>
+                    <td class="totes" title="final score">{p.getCurrentScore()}</td>
                 </tr>
             {/each}
             </tbody>
@@ -193,6 +225,40 @@
         text-align: center;
         padding: 1em;
         margin: 0 auto;
+    }
+
+    button {
+        background: red;
+        border: 1px solid darkred;
+        border-radius: 6px;
+        box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+        box-sizing: border-box;
+        color: white;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        line-height: 16px;
+        min-height: 40px;
+        outline: 0;
+        padding: 12px 14px;
+        text-align: center;
+        text-rendering: geometricprecision;
+        text-transform: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        vertical-align: middle;
+    }
+
+    button:hover,
+    button:active {
+        background-color: initial;
+        background-position: 0 0;
+        color: #FF4742;
+    }
+
+    button:active {
+        background-color: white;
     }
 
     table {
@@ -225,6 +291,11 @@
 
     td.redSuit {
         color: red;
+    }
+
+    td.actions {
+        background-color: white;
+        padding-top: 8px;
     }
 
     td.results {
