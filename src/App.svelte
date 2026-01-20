@@ -190,7 +190,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="5" class="totes">Score</td>
+                <td class="totes">Score</td>
                 {#each theGame._players as p}
                     <td colspan="2" class="results totes" title="bids made">{p.getMadeBids()}</td>
                     <td class="totes" title="score">{p.getCurrentScore()}</td>
