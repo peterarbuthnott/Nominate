@@ -62,7 +62,8 @@ export default class Game {
 
 class Round {
     private _roundNumber: number = 0;
-    public _trumpSuit: string = "no"
+    public _trumpSuit: string = "no";
+    public _suit: string ""; 
     private _trumpSuits: string[] = ["clubs ♣", "diamonds ♦", "hearts ♥", "spades ♠"];
     public _isRedSuit: boolean = false;
     private _redSuits: boolean[] = [false, true, true, false];
@@ -92,6 +93,7 @@ class Round {
             this._trumpSuit = this._trumpSuits[(roundNumber < 15 ? roundNumber - 11 : roundNumber - 15)];
             this._isRedSuit = this._redSuits[(roundNumber < 15 ? roundNumber - 11 : roundNumber - 15)];
         }
+        this._suit = this._trumpSuit.slice(-2);
     }
 
     get roundNumber(): number {
