@@ -125,10 +125,7 @@
             {#each theGame._rounds as r}
                 <tr class:isCurrent={isCurrentRound(r.roundNumber)}
                     class:isMiss={r.isMiss} class:isBlind={r.isBlind}>
-                    <td class="totes" class:redSuit={r._isRedSuit}
-                        title="Round: " + {r.roundNumber} + {r.isBlind ? "BLIND " : ""}
-                            + {r.isMiss ? "MISS " : ""} + {r.tricks === 0 ? "" : r.tricks}
-                            + {r._trumpSuit === "no" ? "" : r._trumpSuit}>
+                    <td class="totes" class:redSuit={r._isRedSuit}>
                         {r.isBlind ? "B" : ""} {r.isMiss ? "M" : ""}
                         {r.tricks === 0 ? "" : r.tricks}
                         {r._suit === "no" ? "" : r._suit}</td>
