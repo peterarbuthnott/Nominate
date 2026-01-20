@@ -114,11 +114,11 @@
         <table>
             <thead>
             <tr>
-                <th>round</th>
-                <th>&nbsp;</th>
+                <th>Round</th>
+                <!-- th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>trumps</th>
-                <th>tricks</th>
+                <th>tricks</th -->
                 {#each theGame._players as p}
                     <td colspan="3">{p.name}</td>
                 {/each}
@@ -129,11 +129,14 @@
             {#each theGame._rounds as r}
                 <tr class:isCurrent={isCurrentRound(r.roundNumber)}
                     class:isMiss={r.isMiss} class:isBlind={r.isBlind}>
-                    <td>{r.roundNumber}</td>
-                    <td>{r.isBlind ? "blind" : ""}</td>
-                    <td>{r.isMiss ? "miss" : ""}</td>
-                    <td class="totes" class:redSuit={r._isRedSuit}>{r._trumpSuit === "no" ? "" : r._trumpSuit}</td>
-                    <td>{r.tricks}</td>
+                    <td class="totes" class:redSuit={r._isRedSuit}>{r.roundNumber} :
+                        {r.isBlind ? "B" : ""} {r.isMiss ? "M" : ""}
+                        {r.tricks}
+                        {r._suit === "no" ? "" : r._suit}</td>
+                    <!-- td>{r.isBlind ? "blind" : ""}</td -->
+                    <!-- td>{r.isMiss ? "miss" : ""}</td -->
+                    <!-- td class="totes" class:redSuit={r._isRedSuit}>{r._trumpSuit === "no" ? "" : r._trumpSuit}</td -->
+                    <!-- td>{r.tricks}</td -->
                     {#each theGame._players as p}
                         {#if r.roundNumber < theGame._currentRound}
                             <td class="edge entered"
