@@ -633,6 +633,7 @@ var app = (function () {
                 this._trumpSuit = this._trumpSuits[(roundNumber < 15 ? roundNumber - 11 : roundNumber - 15)];
                 this._isRedSuit = this._redSuits[(roundNumber < 15 ? roundNumber - 11 : roundNumber - 15)];
             }
+            this._suit = this._trumpSuit.slice(-2);
         }
         get roundNumber() {
             return this._roundNumber;
@@ -1032,24 +1033,16 @@ var app = (function () {
     	let tr0;
     	let th0;
     	let t3;
+    	let t4;
     	let th1;
-    	let t5;
-    	let th2;
-    	let t7;
-    	let th3;
-    	let t9;
-    	let th4;
-    	let t11;
-    	let t12;
-    	let th5;
-    	let t14;
+    	let t6;
     	let tbody;
-    	let t15;
+    	let t7;
     	let tfoot;
     	let tr1;
     	let td0;
-    	let t17;
-    	let t18;
+    	let t9;
+    	let t10;
     	let td1;
     	let each_value_6 = /*theGame*/ ctx[1]._players;
     	validate_each_argument(each_value_6);
@@ -1084,66 +1077,49 @@ var app = (function () {
     			thead = element("thead");
     			tr0 = element("tr");
     			th0 = element("th");
-    			th0.textContent = "round";
+    			th0.textContent = "Round";
     			t3 = space();
-    			th1 = element("th");
-    			th1.textContent = " ";
-    			t5 = space();
-    			th2 = element("th");
-    			th2.textContent = " ";
-    			t7 = space();
-    			th3 = element("th");
-    			th3.textContent = "trumps";
-    			t9 = space();
-    			th4 = element("th");
-    			th4.textContent = "tricks";
-    			t11 = space();
 
     			for (let i = 0; i < each_blocks_2.length; i += 1) {
     				each_blocks_2[i].c();
     			}
 
-    			t12 = space();
-    			th5 = element("th");
-    			th5.textContent = "Actions ...";
-    			t14 = space();
+    			t4 = space();
+    			th1 = element("th");
+    			th1.textContent = "Actions ...";
+    			t6 = space();
     			tbody = element("tbody");
 
     			for (let i = 0; i < each_blocks_1.length; i += 1) {
     				each_blocks_1[i].c();
     			}
 
-    			t15 = space();
+    			t7 = space();
     			tfoot = element("tfoot");
     			tr1 = element("tr");
     			td0 = element("td");
     			td0.textContent = "Score";
-    			t17 = space();
+    			t9 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t18 = space();
+    			t10 = space();
     			td1 = element("td");
     			td1.textContent = " ";
     			add_location(h2, file, 109, 8, 4334);
     			add_location(th0, file, 113, 16, 4421);
-    			add_location(th1, file, 114, 16, 4452);
-    			add_location(th2, file, 115, 16, 4484);
-    			add_location(th3, file, 116, 16, 4516);
-    			add_location(th4, file, 117, 16, 4548);
-    			add_location(th5, file, 121, 16, 4700);
+    			add_location(th1, file, 117, 16, 4572);
     			add_location(tr0, file, 112, 12, 4400);
     			add_location(thead, file, 111, 12, 4380);
-    			add_location(tbody, file, 124, 12, 4772);
-    			attr_dev(td0, "colspan", "5");
+    			add_location(tbody, file, 120, 12, 4644);
     			attr_dev(td0, "class", "totes svelte-1sqv3z7");
-    			add_location(td0, file, 186, 16, 8477);
+    			add_location(td0, file, 181, 16, 8295);
     			attr_dev(td1, "class", "svelte-1sqv3z7");
-    			add_location(td1, file, 191, 16, 8782);
-    			add_location(tr1, file, 185, 12, 8456);
-    			add_location(tfoot, file, 184, 12, 8436);
+    			add_location(td1, file, 186, 16, 8588);
+    			add_location(tr1, file, 180, 12, 8274);
+    			add_location(tfoot, file, 179, 12, 8254);
     			attr_dev(table, "class", "svelte-1sqv3z7");
     			add_location(table, file, 110, 8, 4360);
     		},
@@ -1155,39 +1131,31 @@ var app = (function () {
     			append_dev(thead, tr0);
     			append_dev(tr0, th0);
     			append_dev(tr0, t3);
-    			append_dev(tr0, th1);
-    			append_dev(tr0, t5);
-    			append_dev(tr0, th2);
-    			append_dev(tr0, t7);
-    			append_dev(tr0, th3);
-    			append_dev(tr0, t9);
-    			append_dev(tr0, th4);
-    			append_dev(tr0, t11);
 
     			for (let i = 0; i < each_blocks_2.length; i += 1) {
     				each_blocks_2[i].m(tr0, null);
     			}
 
-    			append_dev(tr0, t12);
-    			append_dev(tr0, th5);
-    			append_dev(table, t14);
+    			append_dev(tr0, t4);
+    			append_dev(tr0, th1);
+    			append_dev(table, t6);
     			append_dev(table, tbody);
 
     			for (let i = 0; i < each_blocks_1.length; i += 1) {
     				each_blocks_1[i].m(tbody, null);
     			}
 
-    			append_dev(table, t15);
+    			append_dev(table, t7);
     			append_dev(table, tfoot);
     			append_dev(tfoot, tr1);
     			append_dev(tr1, td0);
-    			append_dev(tr1, t17);
+    			append_dev(tr1, t9);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(tr1, null);
     			}
 
-    			append_dev(tr1, t18);
+    			append_dev(tr1, t10);
     			append_dev(tr1, td1);
     		},
     		p: function update(ctx, dirty) {
@@ -1204,7 +1172,7 @@ var app = (function () {
     					} else {
     						each_blocks_2[i] = create_each_block_6(child_ctx);
     						each_blocks_2[i].c();
-    						each_blocks_2[i].m(tr0, t12);
+    						each_blocks_2[i].m(tr0, t4);
     					}
     				}
 
@@ -1252,7 +1220,7 @@ var app = (function () {
     					} else {
     						each_blocks[i] = create_each_block_1(child_ctx);
     						each_blocks[i].c();
-    						each_blocks[i].m(tr1, t18);
+    						each_blocks[i].m(tr1, t10);
     					}
     				}
 
@@ -1284,7 +1252,7 @@ var app = (function () {
     	return block;
     }
 
-    // (119:16) {#each theGame._players as p}
+    // (115:16) {#each theGame._players as p}
     function create_each_block_6(ctx) {
     	let td;
     	let t_value = /*p*/ ctx[20].name + "";
@@ -1296,7 +1264,7 @@ var app = (function () {
     			t = text(t_value);
     			attr_dev(td, "colspan", "3");
     			attr_dev(td, "class", "svelte-1sqv3z7");
-    			add_location(td, file, 119, 20, 4630);
+    			add_location(td, file, 115, 20, 4502);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, td, anchor);
@@ -1314,14 +1282,14 @@ var app = (function () {
     		block,
     		id: create_each_block_6.name,
     		type: "each",
-    		source: "(119:16) {#each theGame._players as p}",
+    		source: "(115:16) {#each theGame._players as p}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (164:24) {:else}
+    // (159:24) {:else}
     function create_else_block_1(ctx) {
     	let td0;
     	let t1;
@@ -1340,11 +1308,11 @@ var app = (function () {
     			td2 = element("td");
     			td2.textContent = "score";
     			attr_dev(td0, "class", "results svelte-1sqv3z7");
-    			add_location(td0, file, 164, 28, 7581);
+    			add_location(td0, file, 159, 28, 7399);
     			attr_dev(td1, "class", "results svelte-1sqv3z7");
-    			add_location(td1, file, 165, 28, 7638);
+    			add_location(td1, file, 160, 28, 7456);
     			attr_dev(td2, "class", "results svelte-1sqv3z7");
-    			add_location(td2, file, 166, 28, 7695);
+    			add_location(td2, file, 161, 28, 7513);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, td0, anchor);
@@ -1367,14 +1335,14 @@ var app = (function () {
     		block,
     		id: create_else_block_1.name,
     		type: "else",
-    		source: "(164:24) {:else}",
+    		source: "(159:24) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (141:64) 
+    // (136:64) 
     function create_if_block_6(ctx) {
     	let t0;
     	let td;
@@ -1394,7 +1362,7 @@ var app = (function () {
     			td = element("td");
     			td.textContent = "score";
     			attr_dev(td, "class", "results svelte-1sqv3z7");
-    			add_location(td, file, 162, 28, 7490);
+    			add_location(td, file, 157, 28, 7308);
     		},
     		m: function mount(target, anchor) {
     			if (if_block) if_block.m(target, anchor);
@@ -1428,14 +1396,14 @@ var app = (function () {
     		block,
     		id: create_if_block_6.name,
     		type: "if",
-    		source: "(141:64) ",
+    		source: "(136:64) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (135:24) {#if r.roundNumber < theGame._currentRound}
+    // (130:24) {#if r.roundNumber < theGame._currentRound}
     function create_if_block_5(ctx) {
     	let td0;
     	let t0_value = /*p*/ ctx[20]._playerRoundScores[/*r*/ ctx[25].roundNumber]._tricksNominated + "";
@@ -1461,14 +1429,14 @@ var app = (function () {
     			t4 = text(t4_value);
     			attr_dev(td0, "class", "edge entered svelte-1sqv3z7");
     			attr_dev(td0, "title", "bid");
-    			add_location(td0, file, 135, 28, 5417);
+    			add_location(td0, file, 130, 28, 5235);
     			attr_dev(td1, "class", "edge entered svelte-1sqv3z7");
     			attr_dev(td1, "title", "got");
-    			add_location(td1, file, 137, 28, 5574);
+    			add_location(td1, file, 132, 28, 5392);
     			attr_dev(td2, "class", "edge entered svelte-1sqv3z7");
     			attr_dev(td2, "title", "score");
     			toggle_class(td2, "madeBid", /*p*/ ctx[20]._playerRoundScores[/*r*/ ctx[25].roundNumber]._madeBid);
-    			add_location(td2, file, 138, 28, 5693);
+    			add_location(td2, file, 133, 28, 5511);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, td0, anchor);
@@ -1502,14 +1470,14 @@ var app = (function () {
     		block,
     		id: create_if_block_5.name,
     		type: "if",
-    		source: "(135:24) {#if r.roundNumber < theGame._currentRound}",
+    		source: "(130:24) {#if r.roundNumber < theGame._currentRound}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (152:55) 
+    // (147:55) 
     function create_if_block_8(ctx) {
     	let td0;
     	let t0_value = /*p*/ ctx[20]._playerRoundScores[/*r*/ ctx[25].roundNumber]._tricksNominated + "";
@@ -1551,15 +1519,15 @@ var app = (function () {
     			attr_dev(td0, "class", "edge entered svelte-1sqv3z7");
     			attr_dev(td0, "title", "bid");
     			toggle_class(td0, "dealer", /*p*/ ctx[20]._isDealer);
-    			add_location(td0, file, 152, 32, 6734);
+    			add_location(td0, file, 147, 32, 6552);
     			attr_dev(select, "title", "got");
     			attr_dev(select, "class", "svelte-1sqv3z7");
     			if (/*p*/ ctx[20]._playerRoundScores[/*r*/ ctx[25].roundNumber]._tricksWon === void 0) add_render_callback(select_change_handler_2);
-    			add_location(select, file, 155, 36, 7027);
+    			add_location(select, file, 150, 36, 6845);
     			attr_dev(td1, "class", "edge results svelte-1sqv3z7");
     			attr_dev(td1, "title", "got");
     			toggle_class(td1, "dealer", /*p*/ ctx[20]._isDealer);
-    			add_location(td1, file, 154, 32, 6926);
+    			add_location(td1, file, 149, 32, 6744);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, td0, anchor);
@@ -1620,14 +1588,14 @@ var app = (function () {
     		block,
     		id: create_if_block_8.name,
     		type: "if",
-    		source: "(152:55) ",
+    		source: "(147:55) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (142:28) {#if roundState === 0}
+    // (137:28) {#if roundState === 0}
     function create_if_block_7(ctx) {
     	let td0;
     	let select;
@@ -1667,14 +1635,14 @@ var app = (function () {
     			attr_dev(select, "title", "bid");
     			attr_dev(select, "class", "svelte-1sqv3z7");
     			if (/*p*/ ctx[20]._playerRoundScores[/*r*/ ctx[25].roundNumber]._tricksNominated === void 0) add_render_callback(select_change_handler_1);
-    			add_location(select, file, 143, 36, 6124);
+    			add_location(select, file, 138, 36, 5942);
     			attr_dev(td0, "class", "edge results svelte-1sqv3z7");
     			attr_dev(td0, "title", "bid");
     			toggle_class(td0, "dealer", /*p*/ ctx[20]._isDealer);
-    			add_location(td0, file, 142, 32, 6023);
+    			add_location(td0, file, 137, 32, 5841);
     			attr_dev(td1, "class", "results svelte-1sqv3z7");
     			toggle_class(td1, "dealer", /*p*/ ctx[20]._isDealer);
-    			add_location(td1, file, 150, 32, 6590);
+    			add_location(td1, file, 145, 32, 6408);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, td0, anchor);
@@ -1733,14 +1701,14 @@ var app = (function () {
     		block,
     		id: create_if_block_7.name,
     		type: "if",
-    		source: "(142:28) {#if roundState === 0}",
+    		source: "(137:28) {#if roundState === 0}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (157:40) {#each Array((r.isMiss ? 8 : r.tricks + 1)) as _, index (index)}
+    // (152:40) {#each Array((r.isMiss ? 8 : r.tricks + 1)) as _, index (index)}
     function create_each_block_5(key_1, ctx) {
     	let option;
     	let t_value = /*index*/ ctx[32] + "";
@@ -1755,7 +1723,7 @@ var app = (function () {
     			t = text(t_value);
     			option.__value = option_value_value = /*index*/ ctx[32];
     			option.value = option.__value;
-    			add_location(option, file, 157, 44, 7257);
+    			add_location(option, file, 152, 44, 7075);
     			this.first = option;
     		},
     		m: function mount(target, anchor) {
@@ -1780,14 +1748,14 @@ var app = (function () {
     		block,
     		id: create_each_block_5.name,
     		type: "each",
-    		source: "(157:40) {#each Array((r.isMiss ? 8 : r.tricks + 1)) as _, index (index)}",
+    		source: "(152:40) {#each Array((r.isMiss ? 8 : r.tricks + 1)) as _, index (index)}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (146:40) {#each Array(r.tricks + 1) as _, index (index)}
+    // (141:40) {#each Array(r.tricks + 1) as _, index (index)}
     function create_each_block_4(key_1, ctx) {
     	let option;
     	let t_value = /*index*/ ctx[32] + "";
@@ -1802,7 +1770,7 @@ var app = (function () {
     			t = text(t_value);
     			option.__value = option_value_value = /*index*/ ctx[32];
     			option.value = option.__value;
-    			add_location(option, file, 146, 44, 6387);
+    			add_location(option, file, 141, 44, 6205);
     			this.first = option;
     		},
     		m: function mount(target, anchor) {
@@ -1827,14 +1795,14 @@ var app = (function () {
     		block,
     		id: create_each_block_4.name,
     		type: "each",
-    		source: "(146:40) {#each Array(r.tricks + 1) as _, index (index)}",
+    		source: "(141:40) {#each Array(r.tricks + 1) as _, index (index)}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (134:20) {#each theGame._players as p}
+    // (129:20) {#each theGame._players as p}
     function create_each_block_3(ctx) {
     	let show_if;
     	let if_block_anchor;
@@ -1882,14 +1850,14 @@ var app = (function () {
     		block,
     		id: create_each_block_3.name,
     		type: "each",
-    		source: "(134:20) {#each theGame._players as p}",
+    		source: "(129:20) {#each theGame._players as p}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (179:20) {:else}
+    // (174:20) {:else}
     function create_else_block(ctx) {
     	let td;
 
@@ -1898,7 +1866,7 @@ var app = (function () {
     			td = element("td");
     			td.textContent = " ";
     			attr_dev(td, "class", "svelte-1sqv3z7");
-    			add_location(td, file, 179, 24, 8319);
+    			add_location(td, file, 174, 24, 8137);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, td, anchor);
@@ -1913,14 +1881,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(179:20) {:else}",
+    		source: "(174:20) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (171:20) {#if isCurrentRound(r.roundNumber)}
+    // (166:20) {#if isCurrentRound(r.roundNumber)}
     function create_if_block_2(ctx) {
     	let td;
 
@@ -1937,7 +1905,7 @@ var app = (function () {
     			td = element("td");
     			if (if_block) if_block.c();
     			attr_dev(td, "class", "actions svelte-1sqv3z7");
-    			add_location(td, file, 171, 24, 7865);
+    			add_location(td, file, 166, 24, 7683);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, td, anchor);
@@ -1969,14 +1937,14 @@ var app = (function () {
     		block,
     		id: create_if_block_2.name,
     		type: "if",
-    		source: "(171:20) {#if isCurrentRound(r.roundNumber)}",
+    		source: "(166:20) {#if isCurrentRound(r.roundNumber)}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (175:55) 
+    // (170:55) 
     function create_if_block_4(ctx) {
     	let button;
     	let mounted;
@@ -1987,7 +1955,7 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Tricking Done >>";
     			attr_dev(button, "class", "svelte-1sqv3z7");
-    			add_location(button, file, 175, 32, 8129);
+    			add_location(button, file, 170, 32, 7947);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -2009,14 +1977,14 @@ var app = (function () {
     		block,
     		id: create_if_block_4.name,
     		type: "if",
-    		source: "(175:55) ",
+    		source: "(170:55) ",
     		ctx
     	});
 
     	return block;
     }
 
-    // (173:28) {#if roundState === 0}
+    // (168:28) {#if roundState === 0}
     function create_if_block_3(ctx) {
     	let button;
     	let mounted;
@@ -2027,7 +1995,7 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Bidding Done >>";
     			attr_dev(button, "class", "svelte-1sqv3z7");
-    			add_location(button, file, 173, 32, 7969);
+    			add_location(button, file, 168, 32, 7787);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, button, anchor);
@@ -2049,43 +2017,32 @@ var app = (function () {
     		block,
     		id: create_if_block_3.name,
     		type: "if",
-    		source: "(173:28) {#if roundState === 0}",
+    		source: "(168:28) {#if roundState === 0}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (126:12) {#each theGame._rounds as r}
+    // (122:12) {#each theGame._rounds as r}
     function create_each_block_2(ctx) {
     	let tr;
-    	let td0;
-    	let t0_value = /*r*/ ctx[25].roundNumber + "";
+    	let td;
+    	let t0_value = (/*r*/ ctx[25].isBlind ? "B" : "") + "";
     	let t0;
     	let t1;
-    	let td1;
-    	let t2_value = (/*r*/ ctx[25].isBlind ? "blind" : "") + "";
+    	let t2_value = (/*r*/ ctx[25].isMiss ? "M" : "") + "";
     	let t2;
     	let t3;
-    	let td2;
-    	let t4_value = (/*r*/ ctx[25].isMiss ? "miss" : "") + "";
+    	let t4_value = (/*r*/ ctx[25].tricks === 0 ? "" : /*r*/ ctx[25].tricks) + "";
     	let t4;
     	let t5;
-    	let td3;
-
-    	let t6_value = (/*r*/ ctx[25]._trumpSuit === "no"
-    	? ""
-    	: /*r*/ ctx[25]._trumpSuit) + "";
-
+    	let t6_value = (/*r*/ ctx[25]._suit === "no" ? "" : /*r*/ ctx[25]._suit) + "";
     	let t6;
     	let t7;
-    	let td4;
-    	let t8_value = /*r*/ ctx[25].tricks + "";
     	let t8;
-    	let t9;
-    	let t10;
     	let show_if;
-    	let t11;
+    	let t9;
     	let each_value_3 = /*theGame*/ ctx[1]._players;
     	validate_each_argument(each_value_3);
     	let each_blocks = [];
@@ -2107,86 +2064,61 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			tr = element("tr");
-    			td0 = element("td");
+    			td = element("td");
     			t0 = text(t0_value);
     			t1 = space();
-    			td1 = element("td");
     			t2 = text(t2_value);
     			t3 = space();
-    			td2 = element("td");
     			t4 = text(t4_value);
     			t5 = space();
-    			td3 = element("td");
     			t6 = text(t6_value);
     			t7 = space();
-    			td4 = element("td");
-    			t8 = text(t8_value);
-    			t9 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t10 = space();
+    			t8 = space();
     			if_block.c();
-    			t11 = space();
-    			attr_dev(td0, "class", "svelte-1sqv3z7");
-    			add_location(td0, file, 128, 20, 4980);
-    			attr_dev(td1, "class", "svelte-1sqv3z7");
-    			add_location(td1, file, 129, 20, 5025);
-    			attr_dev(td2, "class", "svelte-1sqv3z7");
-    			add_location(td2, file, 130, 20, 5081);
-    			attr_dev(td3, "class", "totes svelte-1sqv3z7");
-    			toggle_class(td3, "redSuit", /*r*/ ctx[25]._isRedSuit);
-    			add_location(td3, file, 131, 20, 5135);
-    			attr_dev(td4, "class", "svelte-1sqv3z7");
-    			add_location(td4, file, 132, 20, 5251);
+    			t9 = space();
+    			attr_dev(td, "class", "totes svelte-1sqv3z7");
+    			toggle_class(td, "redSuit", /*r*/ ctx[25]._isRedSuit);
+    			add_location(td, file, 124, 20, 4852);
     			attr_dev(tr, "class", "svelte-1sqv3z7");
     			toggle_class(tr, "isCurrent", /*isCurrentRound*/ ctx[8](/*r*/ ctx[25].roundNumber));
     			toggle_class(tr, "isMiss", /*r*/ ctx[25].isMiss);
     			toggle_class(tr, "isBlind", /*r*/ ctx[25].isBlind);
-    			add_location(tr, file, 126, 16, 4837);
+    			add_location(tr, file, 122, 16, 4709);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, tr, anchor);
-    			append_dev(tr, td0);
-    			append_dev(td0, t0);
-    			append_dev(tr, t1);
-    			append_dev(tr, td1);
-    			append_dev(td1, t2);
-    			append_dev(tr, t3);
-    			append_dev(tr, td2);
-    			append_dev(td2, t4);
-    			append_dev(tr, t5);
-    			append_dev(tr, td3);
-    			append_dev(td3, t6);
+    			append_dev(tr, td);
+    			append_dev(td, t0);
+    			append_dev(td, t1);
+    			append_dev(td, t2);
+    			append_dev(td, t3);
+    			append_dev(td, t4);
+    			append_dev(td, t5);
+    			append_dev(td, t6);
     			append_dev(tr, t7);
-    			append_dev(tr, td4);
-    			append_dev(td4, t8);
-    			append_dev(tr, t9);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(tr, null);
     			}
 
-    			append_dev(tr, t10);
+    			append_dev(tr, t8);
     			if_block.m(tr, null);
-    			append_dev(tr, t11);
+    			append_dev(tr, t9);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty[0] & /*theGame*/ 2 && t0_value !== (t0_value = /*r*/ ctx[25].roundNumber + "")) set_data_dev(t0, t0_value);
-    			if (dirty[0] & /*theGame*/ 2 && t2_value !== (t2_value = (/*r*/ ctx[25].isBlind ? "blind" : "") + "")) set_data_dev(t2, t2_value);
-    			if (dirty[0] & /*theGame*/ 2 && t4_value !== (t4_value = (/*r*/ ctx[25].isMiss ? "miss" : "") + "")) set_data_dev(t4, t4_value);
-
-    			if (dirty[0] & /*theGame*/ 2 && t6_value !== (t6_value = (/*r*/ ctx[25]._trumpSuit === "no"
-    			? ""
-    			: /*r*/ ctx[25]._trumpSuit) + "")) set_data_dev(t6, t6_value);
+    			if (dirty[0] & /*theGame*/ 2 && t0_value !== (t0_value = (/*r*/ ctx[25].isBlind ? "B" : "") + "")) set_data_dev(t0, t0_value);
+    			if (dirty[0] & /*theGame*/ 2 && t2_value !== (t2_value = (/*r*/ ctx[25].isMiss ? "M" : "") + "")) set_data_dev(t2, t2_value);
+    			if (dirty[0] & /*theGame*/ 2 && t4_value !== (t4_value = (/*r*/ ctx[25].tricks === 0 ? "" : /*r*/ ctx[25].tricks) + "")) set_data_dev(t4, t4_value);
+    			if (dirty[0] & /*theGame*/ 2 && t6_value !== (t6_value = (/*r*/ ctx[25]._suit === "no" ? "" : /*r*/ ctx[25]._suit) + "")) set_data_dev(t6, t6_value);
 
     			if (dirty[0] & /*theGame*/ 2) {
-    				toggle_class(td3, "redSuit", /*r*/ ctx[25]._isRedSuit);
+    				toggle_class(td, "redSuit", /*r*/ ctx[25]._isRedSuit);
     			}
-
-    			if (dirty[0] & /*theGame*/ 2 && t8_value !== (t8_value = /*r*/ ctx[25].tricks + "")) set_data_dev(t8, t8_value);
 
     			if (dirty[0] & /*theGame, roundState, isCurrentRound*/ 274) {
     				each_value_3 = /*theGame*/ ctx[1]._players;
@@ -2201,7 +2133,7 @@ var app = (function () {
     					} else {
     						each_blocks[i] = create_each_block_3(child_ctx);
     						each_blocks[i].c();
-    						each_blocks[i].m(tr, t10);
+    						each_blocks[i].m(tr, t8);
     					}
     				}
 
@@ -2220,7 +2152,7 @@ var app = (function () {
 
     				if (if_block) {
     					if_block.c();
-    					if_block.m(tr, t11);
+    					if_block.m(tr, t9);
     				}
     			}
 
@@ -2247,14 +2179,14 @@ var app = (function () {
     		block,
     		id: create_each_block_2.name,
     		type: "each",
-    		source: "(126:12) {#each theGame._rounds as r}",
+    		source: "(122:12) {#each theGame._rounds as r}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (188:16) {#each theGame._players as p}
+    // (183:16) {#each theGame._players as p}
     function create_each_block_1(ctx) {
     	let td0;
     	let t0_value = /*p*/ ctx[20].getMadeBids() + "";
@@ -2274,10 +2206,10 @@ var app = (function () {
     			attr_dev(td0, "colspan", "2");
     			attr_dev(td0, "class", "results totes svelte-1sqv3z7");
     			attr_dev(td0, "title", "bids made");
-    			add_location(td0, file, 188, 20, 8584);
+    			add_location(td0, file, 183, 20, 8390);
     			attr_dev(td1, "class", "totes svelte-1sqv3z7");
     			attr_dev(td1, "title", "score");
-    			add_location(td1, file, 189, 20, 8683);
+    			add_location(td1, file, 184, 20, 8489);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, td0, anchor);
@@ -2301,14 +2233,14 @@ var app = (function () {
     		block,
     		id: create_each_block_1.name,
     		type: "each",
-    		source: "(188:16) {#each theGame._players as p}",
+    		source: "(183:16) {#each theGame._players as p}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (197:4) {#if gameState === 3}
+    // (192:4) {#if gameState === 3}
     function create_if_block(ctx) {
     	let h2;
     	let t1;
@@ -2353,15 +2285,15 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			add_location(h2, file, 197, 8, 8898);
-    			add_location(th0, file, 201, 16, 8985);
-    			add_location(th1, file, 202, 16, 9015);
-    			add_location(th2, file, 203, 16, 9045);
-    			add_location(tr, file, 200, 12, 8964);
-    			add_location(thead, file, 199, 12, 8944);
-    			add_location(tbody, file, 206, 12, 9117);
+    			add_location(h2, file, 192, 8, 8704);
+    			add_location(th0, file, 196, 16, 8791);
+    			add_location(th1, file, 197, 16, 8821);
+    			add_location(th2, file, 198, 16, 8851);
+    			add_location(tr, file, 195, 12, 8770);
+    			add_location(thead, file, 194, 12, 8750);
+    			add_location(tbody, file, 201, 12, 8923);
     			attr_dev(table, "class", "svelte-1sqv3z7");
-    			add_location(table, file, 198, 8, 8924);
+    			add_location(table, file, 193, 8, 8730);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, h2, anchor);
@@ -2418,14 +2350,14 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(197:4) {#if gameState === 3}",
+    		source: "(192:4) {#if gameState === 3}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (208:12) {#each theGame._players as p}
+    // (203:12) {#each theGame._players as p}
     function create_each_block(ctx) {
     	let tr;
     	let td0;
@@ -2454,14 +2386,14 @@ var app = (function () {
     			t4 = text(t4_value);
     			t5 = space();
     			attr_dev(td0, "class", "svelte-1sqv3z7");
-    			add_location(td0, file, 209, 20, 9208);
+    			add_location(td0, file, 204, 20, 9014);
     			attr_dev(td1, "class", "totes results svelte-1sqv3z7");
     			attr_dev(td1, "title", "made bids (out of 18 possible)");
-    			add_location(td1, file, 210, 20, 9246);
+    			add_location(td1, file, 205, 20, 9052);
     			attr_dev(td2, "class", "totes svelte-1sqv3z7");
     			attr_dev(td2, "title", "final score");
-    			add_location(td2, file, 211, 20, 9354);
-    			add_location(tr, file, 208, 16, 9183);
+    			add_location(td2, file, 206, 20, 9160);
+    			add_location(tr, file, 203, 16, 8989);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, tr, anchor);
@@ -2489,7 +2421,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(208:12) {#each theGame._players as p}",
+    		source: "(203:12) {#each theGame._players as p}",
     		ctx
     	});
 
